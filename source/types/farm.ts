@@ -16,3 +16,15 @@ export interface FarmRecord {
   status: "PENDING_SYNC" | "SYNCED";
   // createdAt: string; //save the exact time the farmer created the record
 }
+
+export const card = {
+  padding: 16,
+  borderRadius: 12,
+  backgroundColor: "#fff",
+  marginBottom: 12,
+
+  shadowColor: "#000",
+  shadowOpacity: 0.08,
+  shadowRadius: 6,
+  elevation: 3,
+};

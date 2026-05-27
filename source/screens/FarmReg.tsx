@@ -8,7 +8,7 @@ import { registerFarm } from "../store/api";
 import { savePendingFarm } from "../store/storage";
 import { getCurrentLocation } from "../store/location";
 import { Commodity, FarmRecord } from "../types/farm";
-import { card } from "../components/types";
+import { card } from "../types/farm";
 import { styles } from "./styles";
 
 export default function FarmReg() {
@@ -271,7 +271,7 @@ export default function FarmReg() {
         <Text style={{ color: "red", marginBottom: 10 }}>{errors.consent}</Text>
       )}
 
-      <View style={{ marginTop: 10 }}>
+      <View style={{ marginTop: 10, alignItems: "center" }}>
         <Button
           title={loading ? "Submitting..." : "Submit"}
           onPress={handleSubmit}
