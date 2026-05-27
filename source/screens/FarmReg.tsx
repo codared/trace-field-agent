@@ -45,10 +45,9 @@ export default function FarmReg() {
       newErrors.farmerName = "Farmer name is required.";
     }
 
-    if (!validateNationalId(nationalId)) {
-      newErrors.nationalId = "National ID must follow the format NG-1234567890";
+    if (!/^NG-\d{10}$/.test(nationalId)) {
+      newErrors.nationalId = "Must be NG-1234567890";
     }
-
     if (!commodity) {
       newErrors.commodity = "Commodity is required.";
     }
@@ -137,15 +136,13 @@ export default function FarmReg() {
   const isFormIncomplete = useMemo(() => {
     return (
       !farmerName.trim() ||
-      !validateNationalId(nationalId) ||
+      !nationalId.trim() ||
       !farmSize ||
-      isNaN(Number(farmSize)) ||
-      Number(farmSize) <= 0 ||
-      Number(farmSize) > 100 ||
       !consent ||
-      !gps
+      !gps ||
+      loading
     );
-  }, [farmerName, nationalId, farmSize, consent, gps]);
+  }, [farmerName, nationalId, farmSize, consent, gps, loading]);
 
   return (
     <View style={[card, { flex: 1 }]}>
@@ -171,29 +168,18 @@ export default function FarmReg() {
       />
 
       <FormInput
-        label="National ID (NG-1234567890)"
+        label="National ID (NG-XXXXXXXXXX)"
         value={nationalId}
         onChangeText={(text) => {
-          let cleaned = text.toUpperCase();
-          if (!cleaned.startsWith("NG-")) {
-            cleaned = "NG-" + cleaned.replace(/[^0-9]/g, "");
-          } else {
-            const numericPart = cleaned
-              .replace("NG-", "")
-              .replace(/[^0-9]/g, "")
-              .slice(0, 10);
-
-            cleaned = `NG-${numericPart}`;
-          }
+          const cleaned = text.toUpperCase();
 
           setNationalId(cleaned);
           clearError("nationalId");
         }}
         error={errors.nationalId}
       />
-
       <FormInput
-        label="Farm Size (hectares)"
+        label="Farm Size (hectares < 100)"
         value={farmSize}
         keyboardType="numeric"
         onChangeText={(text) => {
@@ -275,12 +261,6 @@ export default function FarmReg() {
         <Button
           title={loading ? "Submitting..." : "Submit"}
           onPress={handleSubmit}
-          style={[
-            styles.button,
-            {
-              opacity: isFormIncomplete || loading ? 0.5 : 1,
-            },
-          ]}
           disabled={isFormIncomplete || loading}
         />
       </View>
