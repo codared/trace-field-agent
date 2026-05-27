@@ -1,3 +1,5 @@
+import { StyleProp, TextStyle } from "react-native";
+
 export type Commodity = "cocoa" | "cashew" | "coffee" | "shea" | "sesame";
 
 export interface FarmRecord {
@@ -12,5 +14,5 @@ export interface FarmRecord {
   farmSize: number; //hectares
   consent: boolean;
   status: "PENDING_SYNC" | "SYNCED";
-  createdAt: string; //save the exact time the farmer created the record
+  // createdAt: string; //save the exact time the farmer created the record
 }
