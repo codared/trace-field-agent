@@ -12,5 +12,5 @@ export interface FarmRecord {
   farmSize: number; //hectares
   consent: boolean;
   status: "PENDING_SYNC" | "SYNCED";
-  createdAt: string; //
+  createdAt: string; //save the exact time the farmer created the record
 }
